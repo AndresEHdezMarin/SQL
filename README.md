@@ -1,11 +1,16 @@
 # 🧠 SQL Portfolio – Andrés Hernández
+![SQL](https://img.shields.io/badge/SQL-Expert-blue?style=for-the-badge&logo=postgresql)
+![Electromedicine](https://img.shields.io/badge/Electromedicine-Tech-green?style=for-the-badge)
+
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+
 
 ## Hi! 👋 I'm **Andrés Hernández**, an Electromedical Engineer with a passion for data analysis.
 ### This repository contains examples of SQL queries I've developed as part of various analysis projects.
 
 *Feel free to take a look and reach me out if you have any questions.
 ## 📬 Contact
-Interested in chatting about SQL, data, or collaborating?
+Interested in chatting about SQL, data, or collaborating?<br>
 🔗 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés%20Hernández-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/andreshernandezm/)
  
 
@@ -14,5 +19,5 @@ Interested in chatting about SQL, data, or collaborating?
 
 *No dudes en echar un vistazo y contactarme si tienes alguna pregunta.
 ## 📬 Contacto
-¿Te interesa conversar sobre SQL, datos o colaborar? 
+¿Te interesa conversar sobre SQL, datos o colaborar?<br>
 🔗[![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés%20Hernández-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/andreshernandezm/)
