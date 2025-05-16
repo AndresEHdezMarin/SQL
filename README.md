@@ -1,6 +1,6 @@
 # 🧠 SQL Portfolio – Andrés Hernández
 
-## Hello! 👋 I'm **Andrés Hernández**, an Electromedical Engineer with a passion for data analysis.
+## Hi! 👋 I'm **Andrés Hernández**, an Electromedical Engineer with a passion for data analysis.
 ### This repository contains examples of SQL queries I've developed as part of various analysis projects.
 
 *Feel free to take a look and reach me out if you have any questions.
