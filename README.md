@@ -6,6 +6,7 @@
 *Feel free to take a look and reach me out if you have any questions.
 ## 📬 Contact
 Interested in chatting about SQL, data, or collaborating?
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés%20Hernández-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/andreshernandezm/)
 🔗 [LinkedIn](https://www.linkedin.com/in/andreshernandezm/)
 
 
@@ -15,4 +16,5 @@ Interested in chatting about SQL, data, or collaborating?
 *No dudes en echar un vistazo y contactarme si tienes alguna pregunta.
 ## 📬 Contacto
 ¿Te interesa conversar sobre SQL, datos o colaborar? 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés%20Hernández-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/andreshernandezm/)
 🔗 [LinkedIn](https://www.linkedin.com/in/andreshernandezm/)
