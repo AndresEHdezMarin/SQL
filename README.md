@@ -1,8 +1,8 @@
-# 🧠 SQL Portfolio – Andrés Hernández
-![SQL](https://img.shields.io/badge/SQL-Expert-blue?style=for-the-badge&logo=postgresql)
-![Electromedicine](https://img.shields.io/badge/Electromedicine-Tech-green?style=for-the-badge)
+# 🧠 SQL Portfolio – Andrés Hernández ![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+![SQL](https://img.shields.io/badge/SQL-Advanced-blue?style=for-the-badge&logo=postgresql)
+![Electromedicine](https://img.shields.io/badge/Electromedicine-Engineer-green?style=for-the-badge)
 
-![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+
 
 
 ## Hi! 👋 I'm **Andrés Hernández**, an Electromedical Engineer with a passion for data analysis.
