@@ -13,7 +13,7 @@
 ### Este repositorio contiene ejemplos de consultas SQL que he desarrollado como parte de varios proyectos de análisis.
 
 *No dudes en echar un vistazo y contactarme si tienes alguna pregunta.
-
+🌐
 ## 📬 Contact
 Further questions in data analysis, electromedicine or collaborating? <br>
 🔗 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés%20Hernández-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/andreshernandezm/)
