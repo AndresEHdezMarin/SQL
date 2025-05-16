@@ -12,7 +12,7 @@
 ## ¡Buenas! 👋 Soy **Andrés Hernández**, Ingeniero en Electromedicina con una pasión por el análisis de datos.  
 ### Este repositorio contiene ejemplos de consultas SQL que he desarrollado como parte de varios proyectos de análisis.
 
-*No dudes en echar un vistazo y contactarme si tienes alguna pregunta.
+*No dudes en echar un vistazo y contactarme si tienes alguna pregunta.<br>
 🌐
 ## 📬 Contact
 Further questions in data analysis, electromedicine or collaborating? <br>
