@@ -1,4 +1,4 @@
-# 🧠 SQL Portfolio – Andrés Hernández ![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+# 🧠 SQL Portfolio – Andrés Hernández ![Status](https://img.shields.io/badge/Status-On-Going-success?style=for-the-badge)
 ![SQL](https://img.shields.io/badge/SQL-Advanced-blue?style=for-the-badge&logo=postgresql)
 ![Electromedicine](https://img.shields.io/badge/Electromedicine-Engineer-green?style=for-the-badge)
 
