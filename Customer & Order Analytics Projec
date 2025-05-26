@@ -1,0 +1,54 @@
+#-- In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
+
+SELECT * FROM BIT_DB.FebSales LIMIT 10;
+
+#-- Q1) How many many unique orders were placed in January? In other words, how many distinct order ids do we have?
+
+SELECT Count(DISTINCT orderID) 
+FROM BIT_DB.JanSales
+WHERE length(orderID) = 6 
+AND orderID <> 'Order ID';
+
+#-- Q2) How many of those orders were for an iPhone?
+
+SELECT Count(Distinct orderID) 
+FROM BIT_DB.JanSales
+WHERE Product = 'iPhone';
+
+#-- Q3) Select the customer account numbers for all the orders that were placed in February.
+
+SELECT DISTINCT cust.acctnum 
+FROM BIT_DB.customers cust INNER JOIN BIT_DB.FebSales feb
+        ON cust.order_id = feb.orderID
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+
+#-- Q4) Which product was the cheapest one sold in January, and what was the price?
+
+SELECT Product, price 
+FROM BIT_DB.JanSales
+ORDER BY price ASC LIMIT 1;
+
+#-- Q5) What is the total revenue for each product sold in January?
+
+SELECT SUM(Quantity), Product, ROUND(SUM(Quantity)*price,2) AS Revenue
+FROM BIT_DB.JanSales
+GROUP BY Product;
+
+#-- Q6) Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+
+SELECT SUM(Quantity), Product, SUM(Quantity)*price AS Revenue
+FROM BIT_DB.FebSales
+WHERE location LIKE '548 Lincoln St%'
+GROUP BY Product;
+
+#-- Q7) How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+
+SELECT  COUNT(DISTINCT cust.acctnum) AS how_many, 
+        ROUND(AVG(Quantity*price),2) AS AVG_Spent
+
+FROM BIT_DB.FebSales feb LEFT JOIN BIT_DB.customers cust
+        ON feb.orderID = cust.order_id
+WHERE feb.Quantity>2
+AND length(cust.order_id) = 6
+AND cust.order_id <> 'Order ID';
