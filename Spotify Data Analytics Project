@@ -1,0 +1,121 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+-- To check the data first
+
+SELECT * FROM BIT_DB.Spotifydata;
+
+-- Q1) What are the 10 most popular songs?
+
+SELECT  artist_name,
+        track_name,
+        popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+-- Q2) Which artists have 3 or more songs in the database?
+
+SELECT  artist_name,
+        COUNT(*) AS Num_songs
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(*)>2
+ORDER BY Num_songs DESC;
+
+-- Q3) What is the most danceable song (highest danceability)?
+
+SELECT  artist_name,
+        track_name,
+        danceability
+FROM BIT_DB.Spotifydata
+ORDER BY danceability DESC
+LIMIT 1;
+
+-- Q4) Average popularity per artist (only if they have at least 3 songs)
+
+SELECT  artist_name,
+        ROUND(AVG(popularity),2) AS AVG_Popularity
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING COUNT(*)>2
+ORDER BY avg_popularity DESC;
+
+-- Q5) How many songs are there per song key?
+
+SELECT  song_key, 
+        COUNT(*) AS songs_quantity
+FROM BIT_DB.Spotifydata
+GROUP BY song_key
+ORDER BY songs_quantity DESC;
+
+-- Q6) Which songs have the lowest and highest valence values?
+
+SELECT  artist_name,
+        track_name,
+        valence
+FROM BIT_DB.Spotifydata
+WHERE valence>=0.9 OR valence<=0.1
+ORDER BY valence DESC;
+
+-- Q7) Top 5 Artists with the Most Energetic Songs
+
+SELECT  artist_name,
+        energy
+FROM BIT_DB.Spotifydata
+ORDER BY energy DESC
+LIMIT 5;
+
+
+-- Q8) Which songs have high energy but low valence?
+
+SELECT  artist_name,
+        track_name,
+        energy,
+        valence
+FROM BIT_DB.Spotifydata
+WHERE energy>=0.8 AND valence<=0.6
+ORDER BY valence DESC;
+
+-- Q9) See all the songs that are longer than the overall average length on the chart.
+
+SELECT  artist_name,
+        track_name,
+        duration_ms
+FROM BIT_DB.Spotifydata
+WHERE duration_ms> (SELECT AVG(duration_ms) FROM BIT_DB.Spotifydata)
+ORDER BY duration_ms DESC;
+
+-- Q10) What are the most and least popular songs, what acoustic characteristics do they have?
+
+SELECT * 
+FROM BIT_DB.Spotifydata
+WHERE popularity = (SELECT MAX(popularity) FROM BIT_DB.Spotifydata)
+OR popularity = (SELECT MIN(popularity) FROM BIT_DB.Spotifydata);
