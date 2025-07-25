@@ -75,8 +75,6 @@ HAVING Count(orderID)>2;
 
 -- Q10) How many of each type of headphone were sold in February?
 
-SELECT  Product, COUNT(
-
 SELECT  Product,
         SUM(Quantity) AS how_many
 FROM BIT_DB.FebSales
@@ -93,7 +91,7 @@ AND orderID <> 'Order ID';
 
 -- Q12) What was the average quantity of products purchased per account in February?
 
-SELECT SUM(Quantity)/COUNT(acctnum)
+SELECT SUM(Quantity)/COUNT(acctnum) AS avg_purchased_per_account
 FROM BIT_DB.FebSales LEFT JOIN BIT_DB.customers 
     ON order_id = orderID
 WHERE length(orderid) = 6 
@@ -107,10 +105,3 @@ FROM BIT_DB.JanSales
 GROUP BY Product 
 ORDER BY SUM(Quantity*price) DESC
 LIMIT 1;
-
-SELECT product, 
-sum(quantity*price)
-FROM BIT_DB.JanSales 
-GROUP BY product
-ORDER BY sum(quantity*price) desc 
-LIMIT 1
