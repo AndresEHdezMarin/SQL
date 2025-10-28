@@ -44,14 +44,22 @@ GROUP BY Product;
 
 #-- Q7) How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 
-SELECT  COUNT(DISTINCT cust.acctnum) AS how_many, 
-        ROUND(AVG(Quantity*price),2) AS AVG_Spent
-
-FROM BIT_DB.FebSales feb LEFT JOIN BIT_DB.customers cust
-        ON feb.orderID = cust.order_id
-WHERE feb.Quantity>2
-AND length(cust.order_id) = 6
-AND cust.order_id <> 'Order ID';
+SELECT  
+    COUNT(DISTINCT acctnum) AS total_customers,
+    AVG(total_spent) AS avg_spent
+FROM (
+    SELECT  
+        cust.acctnum,
+        Feb.orderID,
+        SUM(Quantity * price) AS total_spent
+    FROM BIT_DB.customers cust
+    INNER JOIN BIT_DB.FebSales Feb
+        ON cust.order_id = Feb.orderID
+    WHERE length(orderID) = 6
+      AND orderID <> 'Order ID'
+    GROUP BY cust.acctnum, Feb.orderID
+    HAVING SUM(Quantity) > 2
+) AS filtered_orders;
 
 #-- Q8) List all the products sold in Los Angeles in February, and include how many of each were sold
 
