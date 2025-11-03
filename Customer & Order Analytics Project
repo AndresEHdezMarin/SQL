@@ -113,3 +113,17 @@ FROM BIT_DB.JanSales
 GROUP BY Product 
 ORDER BY SUM(Quantity*price) DESC
 LIMIT 1;
+
+-- Q14) Find order ids from Georgia (GA) where the order has an average price greater than $1,000. Only find orders from dates beginning with ‘04/1’. Assume that the dates are stored in the MM/DD/YY HH:MM format.
+
+SELECT  Apr.orderID
+FROM BIT_DB.AprSales Apr LEFT JOIN BIT_DB.customers cust
+ON Apr.orderID = cust.order_id
+WHERE Apr.location LIKE '%GA%'
+AND Apr.orderdate LIKE '04/1%'
+AND length(Apr.orderID) = 6
+AND Apr.orderID <> 'Order ID'
+GROUP BY Apr.orderID
+HAVING AVG(Apr.price)>1000;
+
+
