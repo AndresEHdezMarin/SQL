@@ -27,8 +27,9 @@ SELECT 'invoice_items', COUNT(*) FROM invoice_items
 UNION ALL
 SELECT 'employees', COUNT(*) FROM employees;
 
+--IT IS DIVIDED BY 4 BLOCKS OF QUERIES WITH DIFFERENT VARIATION IN DIFFICULTY: 1-BASIC, 2- SUBQUERIES, 3- CTEs and 4-WINDOWS FUNCTIONS. 
 
--- QUERIES
+-- FIRST BLOCK- 17 QUESTIONS OF BASIC SQL
 
 -- Q1) Which countries generate the most total revenue and how many customers contribute to that revenue?
 
