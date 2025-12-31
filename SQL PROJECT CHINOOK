@@ -497,9 +497,15 @@ SELECT  g.GenreId,
         g.name AS Genre_Name,
         COUNT(g.name) AS Invoice_Purchases,
         SUM(ii.UnitPrice * ii.Quantity) AS Total_per_Genre,
+        
+        -- total global (repeated in all rows)
         SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER () AS total_sales_all,
+        
+        -- percentage by gender
         ROUND(SUM(ii.UnitPrice * ii.Quantity)
             / SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (),4)*100 AS genre_sales_percent,
+        
+        -- Pareto-type cumulative
         ROUND(
         SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (
             ORDER BY SUM(ii.UnitPrice * ii.Quantity) DESC
@@ -512,4 +518,33 @@ JOIN tracks t USING (GenreId)
 JOIN invoice_items ii USING (TrackId)
 GROUP BY g.GenreId, g.Name
 ORDER BY Total_per_Genre DESC ;
+
+-- Q5) How important was each invoice within the client's total spending?
+
+SELECT
+        c.CustomerId,
+        c.FirstName || ' ' || c.LastName AS Customer_Name,
+        ii.InvoiceId,
+        
+	-- Total per invoice
+	
+	SUM(ii.UnitPrice*ii.Quantity) AS Total_per_invoice,
+        
+	-- Client's historical total
+        
+	SUM(SUM(ii.UnitPrice * ii.Quantity)) 
+        OVER (PARTITION BY c.CustomerId ORDER BY SUM(ii.UnitPrice*ii.Quantity) DESC) AS total_inv_cust,
+        
+	-- % that the invoice represents within the client
+        ROUND(
+            SUM(ii.UnitPrice * ii.Quantity)
+            / SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (PARTITION BY c.CustomerId), 4
+        )*100 AS invoices_sales_percent
+    
+    FROM customers c
+    JOIN invoices i USING (CustomerId)
+    JOIN invoice_items ii USING (InvoiceId)
+GROUP BY c.CustomerId, ii.InvoiceId
+ORDER BY c.CustomerId;
+
 
