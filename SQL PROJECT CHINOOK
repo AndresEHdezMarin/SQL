@@ -491,6 +491,7 @@ JOIN invoice_items ii USING (TrackId)
 GROUP BY g.GenreId, g.Name
 ORDER BY genre_sales_percent DESC;
 
+
 -- Q4) Which genres sustain the business in terms of revenue?
 
 SELECT  g.GenreId,
@@ -525,21 +526,21 @@ SELECT
         c.CustomerId,
         c.FirstName || ' ' || c.LastName AS Customer_Name,
         ii.InvoiceId,
+         
+	-- Total histórico del cliente
         
-	-- Total per invoice
+	SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (PARTITION BY c.CustomerId) AS total_inv_cust,
+	
+            -- Total por invoice	
 	
 	SUM(ii.UnitPrice*ii.Quantity) AS Total_per_invoice,
-        
-	-- Client's historical total
-        
-	SUM(SUM(ii.UnitPrice * ii.Quantity)) 
-        OVER (PARTITION BY c.CustomerId ORDER BY SUM(ii.UnitPrice*ii.Quantity) DESC) AS total_inv_cust,
-        
-	-- % that the invoice represents within the client
+                 
+	-- % que representa la invoice dentro del cliente
+	
         ROUND(
             SUM(ii.UnitPrice * ii.Quantity)
             / SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (PARTITION BY c.CustomerId), 4
-        )*100 AS invoices_sales_percent
+        )*100 AS inv_sales_percent_from_Cust_Total
     
     FROM customers c
     JOIN invoices i USING (CustomerId)
