@@ -415,8 +415,7 @@ GROUP BY CustomerId, Country;
 -- ************** FOURTH BLOCK - WINDOWS FUNCTIONS ***************
 -- ***************************************************************
 
--- Q1) Which customers are above the global average in spending, number of invoices, and gender diversity — all calculated in a single pass?
-
+-- Q1) How is the customers global average behaving in spending, number of invoices, and gender diversity — all calculated in a single pass?
 
 WITH customer_genres AS (
     SELECT
@@ -453,23 +452,6 @@ SELECT DISTINCT
 FROM customer_spend cs
 JOIN customer_genres cg
     ON cs.CustomerId = cg.CustomerId;
-
-SELECT
-    c.CustomerId,
-    c.FirstName || ' ' || c.LastName AS Customer_Name,
-    c.Country,
-    i.InvoiceId,
-    t.Name,
-    g.Name,
-    ROUND(
-    (ii.UnitPrice * ii.Quantity) /
-    SUM(ii.UnitPrice * ii.Quantity) OVER (PARTITION BY c.CustomerId), 3)*10 AS track_weight,
-    SUM(ii.UnitPrice * ii.Quantity) OVER (PARTITION BY c.CustomerId) AS total_spent
-FROM customers c
-JOIN invoices i USING (CustomerId)
-JOIN invoice_items ii USING (InvoiceId)
-JOIN tracks t USING (TrackId)
-JOIN genres g USING (GenreId);
 
 -- Q2) This query can gives DATA that can response to this questions: 
 -- What is the total value of each invoice, and how is that value composed at the track, album, artist, and genre level?
@@ -508,3 +490,26 @@ JOIN tracks t USING (GenreId)
 JOIN invoice_items ii USING (TrackId)
 GROUP BY g.GenreId, g.Name
 ORDER BY genre_sales_percent DESC;
+
+-- Q4) Which genres sustain the business in terms of revenue?
+
+SELECT  g.GenreId,
+        g.name AS Genre_Name,
+        COUNT(g.name) AS Invoice_Purchases,
+        SUM(ii.UnitPrice * ii.Quantity) AS Total_per_Genre,
+        SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER () AS total_sales_all,
+        ROUND(SUM(ii.UnitPrice * ii.Quantity)
+            / SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (),4)*100 AS genre_sales_percent,
+        ROUND(
+        SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER (
+            ORDER BY SUM(ii.UnitPrice * ii.Quantity) DESC
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        )
+        / SUM(SUM(ii.UnitPrice * ii.Quantity)) OVER ()
+    ,3) * 100 AS cumulative_percent
+FROM genres g 
+JOIN tracks t USING (GenreId)
+JOIN invoice_items ii USING (TrackId)
+GROUP BY g.GenreId, g.Name
+ORDER BY Total_per_Genre DESC ;
+
