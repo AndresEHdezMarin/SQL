@@ -548,4 +548,57 @@ SELECT
 GROUP BY c.CustomerId, ii.InvoiceId
 ORDER BY c.CustomerId;
 
+-- Q6) Cumulative evolution of customer spending over time
 
+WITH invoices_totals AS(
+    SELECT
+            c.CustomerId,
+            c.FirstName || ' ' || c.LastName AS Customer_Name,
+            i.InvoiceId,
+                
+                -- Total per invoice	
+    	
+    	SUM(ii.UnitPrice*ii.Quantity) AS Total_per_invoice,
+    
+            i.InvoiceDate
+    	
+        FROM customers c
+        JOIN invoices i USING (CustomerId)
+        JOIN invoice_items ii USING (InvoiceId)
+    GROUP BY c.CustomerId, ii.InvoiceId
+    ORDER BY c.CustomerId
+)
+
+SELECT *,
+             -- Customer's historical total
+            
+    	SUM(Total_per_invoice) OVER (PARTITION BY CustomerId) AS total_inv_cust,
+     
+            -- Date spent cumulative
+            
+            ROUND( SUM(Total_per_invoice) OVER (PARTITION BY CustomerId
+                ORDER BY InvoiceDate ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),5) AS cumulative_spent
+
+FROM    invoices_totals
+ORDER BY CustomerId, InvoiceDate;
+
+
+-- Q7) Which genres generate the most revenue and how do they rank against each other?
+
+SELECT
+    g.GenreId,
+    g.Name AS Genre_Name,
+
+    SUM(ii.UnitPrice * ii.Quantity) AS total_sales,
+
+    RANK() OVER (
+        ORDER BY SUM(ii.UnitPrice * ii.Quantity) DESC
+    ) AS genre_rank
+
+FROM invoice_items ii
+JOIN tracks t USING (TrackId)
+JOIN genres g USING (GenreId)
+
+GROUP BY
+    g.GenreId, g.Name
+ORDER BY genre_rank;
